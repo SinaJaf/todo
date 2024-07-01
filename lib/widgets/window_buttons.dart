@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final buttonColors = WindowButtonColors(
     iconNormal: Colors.lightGreenAccent.shade400,
     mouseOver: Colors.lightGreenAccent.shade400,
-    mouseDown: Color.fromARGB(255, 80, 179, 19),
+    mouseDown: const Color.fromARGB(255, 80, 179, 19),
     iconMouseOver: Colors.black,
     iconMouseDown: Colors.white);
 
@@ -15,7 +15,7 @@ final closeButtonColors = WindowButtonColors(
     iconMouseOver: Colors.black);
 
 class WindowButtons extends StatelessWidget {
-  const WindowButtons({Key? key}) : super(key: key);
+  const WindowButtons({super.key});
   @override
   Widget build(BuildContext context) {
     return Row(

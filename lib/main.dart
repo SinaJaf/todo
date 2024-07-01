@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
         ).copyWith(
           surface: Colors.black,
           primary: Colors.black,
-          surfaceContainer: Colors.black,
           background: Colors.black,
           onSurface: Colors.lightGreenAccent.shade400,
         ),
@@ -50,23 +49,63 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          WindowTitleBarBox(
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    widget.title,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
+          // Tasks list
+          ListView.builder(
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: Checkbox(
+                  value: false,
+                  onChanged: (value) {},
                 ),
-                Expanded(
-                  child: MoveWindow(),
+                title: const Text("Title"),
+                onTap: () {},
+              );
+            },
+          ),
+
+          // Title bar
+          Positioned(
+            top: 0,
+            right: 0,
+            left: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black,
+                border: Border(
+                  bottom: BorderSide(color: Colors.grey.shade800),
                 ),
-                const WindowButtons(),
-              ],
+              ),
+              child: WindowTitleBarBox(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: MoveWindow(
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            widget.title,
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const WindowButtons(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          Positioned(
+            right: 20,
+            bottom: 20,
+            child: FloatingActionButton(
+              backgroundColor: Colors.lightGreenAccent.shade400,
+              onPressed: () {},
+              child: const Icon(Icons.add_rounded),
             ),
           ),
         ],
