@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:todo/widgets/window_buttons.dart';
+import 'package:todo/widgets/new_task_button.dart';
+import 'package:todo/widgets/tasklist.dart';
+import 'package:todo/widgets/titlebar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,9 +28,16 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.lightGreenAccent.shade400,
         ).copyWith(
           surface: Colors.black,
-          primary: Colors.black,
+          primary: Colors.lightGreenAccent.shade400,
           background: Colors.black,
           onSurface: Colors.lightGreenAccent.shade400,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(
+              Colors.lightGreenAccent.shade400,
+            ),
+          ),
         ),
         useMaterial3: true,
       ),
@@ -52,62 +61,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         children: [
           // Tasks list
-          ListView.builder(
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Checkbox(
-                  value: false,
-                  onChanged: (value) {},
-                ),
-                title: const Text("Title"),
-                onTap: () {},
-              );
-            },
-          ),
+          taskList(setState),
 
           // Title bar
-          Positioned(
-            top: 0,
-            right: 0,
-            left: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey.shade800),
-                ),
-              ),
-              child: WindowTitleBarBox(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: MoveWindow(
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            widget.title,
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const WindowButtons(),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          titleBar(context, widget.title),
 
-          Positioned(
-            right: 20,
-            bottom: 20,
-            child: FloatingActionButton(
-              backgroundColor: Colors.lightGreenAccent.shade400,
-              onPressed: () {},
-              child: const Icon(Icons.add_rounded),
-            ),
-          ),
+          // add new task button
+          addNewTaskButton(context, setState)
         ],
       ),
     );
